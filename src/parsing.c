@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/21 15:36:00 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/21 18:14:39 by sberete          ###   ########.fr       */
+/*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
+/*   Updated: 2025/10/23 15:05:06 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	main(int argc, char **argv)
+int	parsing(int argc, char **argv)
 {
-	t_data	cub3d;
-
-	if (parsing(argc, argv) != 0)
-		param_available();
-	cub3d_init(&cub3d, argv[1]);
-	mlx_loop(cub3d.mlx);
+	(void)argv;
+	if (argc != 2)
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/20 19:03:09 by sberete          ###   ########.fr       */
+/*   Updated: 2025/10/23 17:50:58 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,22 @@ int	hook_func(t_data *ap)
 	return (0);
 }
 
-int	key_func(int keycode, t_data *ap)
+int	key_func(int keycode, t_data *cub3d)
 {
 	if (keycode == 65307)
-		close_mlx(ap);
-	// else if (keycode == 97 || keycode == 119 || keycode == 100
-	// 	|| keycode == 115)
-	// {
-	// 	97 = a;
-	// 	119 = w;
-	// 	100 = d;
-	// 	115 = s;
-	// }
+		close_mlx(cub3d);
+	else if (keycode == 97 || keycode == 119 || keycode == 100
+		|| keycode == 115)
+	{
+		if (keycode == 97)
+			cub3d->player.x -= 5;
+		if (keycode == 100)
+			cub3d->player.x += 5;
+		if (keycode == 119)
+			cub3d->player.y += 5;
+		if (keycode == 115)
+			cub3d->player.y -= 5;
+	}
 	// else if (keycode == 65361 || keycode == 65363)
 	// {
 	// 	65361 = fleche de gauche;

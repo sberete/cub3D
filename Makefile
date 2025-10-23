@@ -37,11 +37,12 @@ $(MLX):
 .PHONY: clean
 clean:
 	rm -rf $(OBJ_DIR)
+	rm -rf $(MLX)
 	$(MAKE) -C lib/libft clean
+
 .PHONY: fclean
 fclean: clean
 	rm -rf $(NAME)
-	rm -rf $(MLX)
 	$(MAKE) -C lib/libft fclean
 
 .PHONY:
