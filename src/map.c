@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/21 15:36:00 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/24 16:42:53 by sberete          ###   ########.fr       */
+/*   Created: 2025/10/24 11:55:57 by sberete           #+#    #+#             */
+/*   Updated: 2025/10/24 18:00:30 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	main(int argc, char **argv)
+void	test(t_map *map, char *argv)
 {
-	t_data	cub3d;
-
-	if (parsing(argc, argv) != 0)
-		param_available();
-	cub3d_init(&cub3d, argv[1]);
-	mlx_loop(cub3d.mlx.ptr);
+	int	fd;
+	// char *line;
+	
+	(void)map;
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
+		exit(1);
+	// while (condition)
+	// {
+	// 	/* code */
+	// }
+	
+	// map->grid = ft_split(, '\n');
+	printf("%d\n", fd);
 }

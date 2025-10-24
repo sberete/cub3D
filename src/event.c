@@ -6,33 +6,33 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/23 17:50:58 by sberete          ###   ########.fr       */
+/*   Updated: 2025/10/24 16:46:52 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	hook_func(t_data *ap)
+int	hook_func(t_data *cub3d)
 {
-	close_mlx(ap);
+	free_all_and_exit(cub3d);
 	return (0);
 }
 
 int	key_func(int keycode, t_data *cub3d)
 {
 	if (keycode == 65307)
-		close_mlx(cub3d);
+		free_all_and_exit(cub3d);
 	else if (keycode == 97 || keycode == 119 || keycode == 100
 		|| keycode == 115)
 	{
 		if (keycode == 97)
-			cub3d->player.x -= 5;
+			cub3d->player.pos.x -= 5;
 		if (keycode == 100)
-			cub3d->player.x += 5;
+			cub3d->player.pos.x += 5;
 		if (keycode == 119)
-			cub3d->player.y += 5;
+			cub3d->player.pos.y += 5;
 		if (keycode == 115)
-			cub3d->player.y -= 5;
+			cub3d->player.pos.y -= 5;
 	}
 	// else if (keycode == 65361 || keycode == 65363)
 	// {
@@ -58,7 +58,7 @@ int	key_func(int keycode, t_data *cub3d)
 
 void	mlx_hookes(t_data *cub3D)
 {
-	mlx_key_hook(cub3D->win, key_func, cub3D);
-	mlx_hook(cub3D->win, DestroyNotify, StructureNotifyMask, hook_func, cub3D);
+	mlx_key_hook(cub3D->mlx.win, key_func, cub3D);
+	mlx_hook(cub3D->mlx.win, DestroyNotify, StructureNotifyMask, hook_func, cub3D);
 	// mlx_mouse_hook(cub3D->win, mouse_func, cub3D);
 }
