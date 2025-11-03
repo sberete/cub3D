@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/01 16:02:05 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/03 14:11:32 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ int	key_press(int keycode, t_data *cub3d)
 		cub3d->player.move.left = 1;
 	if (keycode == XK_d)
 		cub3d->player.move.right = 1;
-	/*
 	if (keycode == XK_Left)
 		cub3d->player.move.rotate_left = 1;
 	if (keycode == XK_Right)
 		cub3d->player.move.rotate_right = 1;
-	*/
 	// else if(keycode == 65505) // Shift pour le sprint [Bonus]
 	return (0);
 }
@@ -44,12 +42,10 @@ int	key_release(int keycode, t_data *cub3d)
 		cub3d->player.move.left = 0;
 	if (keycode == XK_d)
 		cub3d->player.move.right = 0;
-	/*
 	if (keycode == XK_Left)
 		cub3d->player.move.rotate_left = 0;
 	if (keycode == XK_Right)
 		cub3d->player.move.rotate_right = 0;
-	*/
 	return (0);
 }
 
@@ -66,6 +62,8 @@ void	update_player_position(t_data *cub3d)
 		cub3d->player.pos.x -= speed;
 	if (cub3d->player.move.right)
 		cub3d->player.pos.x += speed;
+	// if (cub3d->player.move.rotate_left)
+	// if (cub3d->player.move.rotate_right)
 	// ex : vérifier que cub3d->map.grid[(int)player.pos.y][(int)player.pos.x] != '1'
 }
 

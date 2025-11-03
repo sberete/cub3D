@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/01 16:07:53 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/03 15:36:34 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@
 # define BUFFER_SIZE 42
 #define TILE_SIZE 100
 
+#define WHITE     0x00FFFFFF
+#define BLACK     0x00000000
+#define RED       0x00FF0000
+#define GREEN     0x0000FF00
+#define BLUE      0x000000FF
+#define YELLOW    0x00FFFF00
+#define MAGENTA   0x00FF00FF
+#define CYAN      0x0000FFFF
+#define GRAY      0x00808080
+#define DARKGRAY  0x00404040
+#define LIGHTGRAY 0x00C0C0C0
+
+/* Custom project colors */
+#define COLOR_WALL      GRAY
+#define COLOR_FLOOR     WHITE
+#define COLOR_PLAYER    RED
 typedef struct s_img
 {
 	void		*img_ptr;

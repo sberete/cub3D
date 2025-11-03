@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/01 16:03:53 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/03 15:15:30 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	parsing(t_data *cub3d, int argc, char **argv)
 	for (int y = 0; cub3d->map.grid[y]; y++)
 	{
 		line = cub3d->map.grid[y];
-		len = strlen(line);
+		len = ft_strlen(line);
 		if ((int)len > cub3d->map.width)
 			cub3d->map.width = (int)len;
 		cub3d->map.height++;
