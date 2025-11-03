@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 11:48:48 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/24 12:49:40 by sberete          ###   ########.fr       */
+/*   Updated: 2025/10/29 13:47:52 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*get_next_line(int fd)
 	static char	*str;
 	char		*buffer;
 	char		*new_line;
-	size_t		bits;
+	ssize_t		bits;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);

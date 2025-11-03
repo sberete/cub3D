@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 18:07:38 by sberete           #+#    #+#             */
-/*   Updated: 2025/09/16 22:20:36 by sberete          ###   ########.fr       */
+/*   Updated: 2025/10/29 21:46:16 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int		ft_toupper(int c);
 char	*ft_pathjoin(char const *s1, char const *s2);
 size_t	ft_tablen(char **t);
 char	*ft_join_sep(const char *a, const char *b, const char *c);
+char	**ft_tabdup(char **src);
 
 #endif

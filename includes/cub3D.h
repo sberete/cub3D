@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/24 16:47:47 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/01 16:07:53 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define WIDTH 800
 # define HEIGHT 800
 # define BUFFER_SIZE 42
+#define TILE_SIZE 100
 
 typedef struct s_img
 {
@@ -59,6 +60,8 @@ typedef struct s_map
 	t_texture	texture;
 	t_color		color;
 	char		**grid;
+	int			width;
+	int			height;
 }				t_map;
 
 typedef struct s_direction
@@ -73,8 +76,19 @@ typedef struct s_position
 	double		y;
 }				t_position;
 
+typedef struct s_move
+{
+	int			forward;
+	int			backward;
+	int			left;
+	int			right;
+	int			rotate_left;
+	int			rotate_right;
+}				t_move;
+
 typedef struct s_player
 {
+	t_move		move;
 	t_direction	dir;
 	t_position	pos;
 }				t_player;
@@ -93,14 +107,20 @@ typedef struct s_data
 	t_player	player;
 }				t_data;
 
-int				parsing(int argc, char **argv);
+int	parsing(t_data *cub3d, int argc, char **argv);
 void			mlx_hookes(t_data *cub3D);
 void			free_all(t_data *cub3D);
-void			free_all_and_exit(t_data *cub3D);
+int				free_all_and_exit(t_data *cub3D);
+// draw.c
+void	put_pixel(t_img *img, int x, int y, int color);
+void	draw_square(t_img *img, int x, int y, int color);
+void	draw_map_2d(t_data *cub3d);
+void	draw_player_2d(t_data *cub3d);
+void	draw_scene(t_data *cub3d);
 
 void			param_available(void);
 void			mlx_failure(t_data *cub3D, char *str);
-void			cub3d_init(t_data *cub3d, char *argv);
+void			cub3d_init(t_data *cub3d);
 char			*get_next_line(int fd);
 void			test(t_map *map, char *argv);
 
