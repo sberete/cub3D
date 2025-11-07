@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/03 15:15:30 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/07 01:53:54 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static char	**fill_test_map(void)
 
 int	parsing(t_data *cub3d, int argc, char **argv)
 {
-	int		found;
-	char	*line;
-	size_t	len;
-	char	c;
+	int found;
+	char *line;
+	size_t len;
+	char c;
 
 	if (argc != 2)
 		return (1);
@@ -66,10 +66,26 @@ int	parsing(t_data *cub3d, int argc, char **argv)
 				cub3d->player.pos.x = (double)x + 0.5;
 				cub3d->player.pos.y = (double)y + 0.5;
 				cub3d->map.grid[y][x] = '0';
-				if (c == 'N') { cub3d->player.dir.x = 0.0;  cub3d->player.dir.y = -1.0; }
-				if (c == 'S') { cub3d->player.dir.x = 0.0;  cub3d->player.dir.y =  1.0; }
-				if (c == 'E') { cub3d->player.dir.x = 1.0;  cub3d->player.dir.y =  0.0; }
-				if (c == 'W') { cub3d->player.dir.x = -1.0; cub3d->player.dir.y =  0.0; }
+				if (c == 'N')
+				{
+					cub3d->player.dir.x = 0.0;
+					cub3d->player.dir.y = -1.0;
+				}
+				if (c == 'S')
+				{
+					cub3d->player.dir.x = 0.0;
+					cub3d->player.dir.y = 1.0;
+				}
+				if (c == 'E')
+				{
+					cub3d->player.dir.x = 1.0;
+					cub3d->player.dir.y = 0.0;
+				}
+				if (c == 'W')
+				{
+					cub3d->player.dir.x = -1.0;
+					cub3d->player.dir.y = 0.0;
+				}
 				found = 1;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 19:23:15 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/30 18:32:30 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/07 01:54:46 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@ static void	free_map(t_map *map)
 {
 	if (map->grid)
 		free_tab(map->grid);
-	// if (map->color.ceiling)
-	// 	free(map->color.ceiling);
-	// if (map->color.floor)
-	// 	free(map->color.floor);
-	// if (map->texture.east)
-	// 	free(map->texture.east);
-	// if (map->texture.north)
-	// 	free(map->texture.north);
-	// if (map->texture.west)
-	// 	free(map->texture.west);
-	// if (map->texture.south)
-	// 	free(map->texture.south);
+	/*if (map->color.ceiling)
+		free(map->color.ceiling);
+	if (map->color.floor)
+		free(map->color.floor);
+	if (map->texture.east)
+		free(map->texture.east);
+	if (map->texture.north)
+		free(map->texture.north);
+	if (map->texture.west)
+		free(map->texture.west);
+	if (map->texture.south)
+		free(map->texture.south);*/
 }
+
 void	free_all(t_data *cub3D)
 {
 	if (cub3D->mlx.win)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/03 14:11:32 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/07 01:52:36 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	key_press(int keycode, t_data *cub3d)
 		cub3d->player.move.rotate_left = 1;
 	if (keycode == XK_Right)
 		cub3d->player.move.rotate_right = 1;
-	// else if(keycode == 65505) // Shift pour le sprint [Bonus]
 	return (0);
 }
 
@@ -49,22 +48,68 @@ int	key_release(int keycode, t_data *cub3d)
 	return (0);
 }
 
+int	is_wall(t_data *cub3d, double x, double y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)x;
+	map_y = (int)y;
+	if (map_y < 0 || map_y >= cub3d->map.height || map_x < 0
+		|| map_x >= cub3d->map.width)
+		return (1);
+	if (cub3d->map.grid[map_y][map_x] == '1')
+		return (1);
+	return (0);
+}
+
+static void	move_player(t_data *cub3d, double dir_x, double dir_y, double speed)
+{
+	double	new_x;
+	double	new_y;
+
+	new_x = cub3d->player.pos.x + dir_x * speed;
+	new_y = cub3d->player.pos.y + dir_y * speed;
+	if (!is_wall(cub3d, new_x, cub3d->player.pos.y))
+		cub3d->player.pos.x = new_x;
+	if (!is_wall(cub3d, cub3d->player.pos.x, new_y))
+		cub3d->player.pos.y = new_y;
+}
+
+static void	rotate_player(t_data *cub3d, double angle)
+{
+	double	old_dir_x;
+
+	old_dir_x = cub3d->player.dir.x;
+	cub3d->player.dir.x = cub3d->player.dir.x * cos(angle) - cub3d->player.dir.y
+		* sin(angle);
+	cub3d->player.dir.y = old_dir_x * sin(angle) + cub3d->player.dir.y
+		* cos(angle);
+}
+
 void	update_player_position(t_data *cub3d)
 {
-	double	speed;
+	double	move_speed;
+	double	rot_speed;
 
-	speed = 0.1;
+	move_speed = 0.08;
+	rot_speed = 0.05;
+	if (cub3d->player.move.rotate_left)
+		rotate_player(cub3d, -rot_speed);
+	if (cub3d->player.move.rotate_right)
+		rotate_player(cub3d, rot_speed);
 	if (cub3d->player.move.forward)
-		cub3d->player.pos.y -= speed;
+		move_player(cub3d, cub3d->player.dir.x, cub3d->player.dir.y,
+			move_speed);
 	if (cub3d->player.move.backward)
-		cub3d->player.pos.y += speed;
+		move_player(cub3d, -cub3d->player.dir.x, -cub3d->player.dir.y,
+			move_speed);
 	if (cub3d->player.move.left)
-		cub3d->player.pos.x -= speed;
+		move_player(cub3d, cub3d->player.dir.y, -cub3d->player.dir.x,
+			move_speed);
 	if (cub3d->player.move.right)
-		cub3d->player.pos.x += speed;
-	// if (cub3d->player.move.rotate_left)
-	// if (cub3d->player.move.rotate_right)
-	// ex : vérifier que cub3d->map.grid[(int)player.pos.y][(int)player.pos.x] != '1'
+		move_player(cub3d, -cub3d->player.dir.y, cub3d->player.dir.x,
+			move_speed);
 }
 
 int	render_loop(t_data *cub3d)
@@ -74,11 +119,10 @@ int	render_loop(t_data *cub3d)
 	return (0);
 }
 
-void	mlx_hookes(t_data *cub3D)
+void	mlx_hookes(t_data *cub3d)
 {
-	mlx_hook(cub3D->mlx.win, 2, 1L << 0, key_press, cub3D);
-	mlx_hook(cub3D->mlx.win, 3, 1L << 1, key_release, cub3D);
-	mlx_hook(cub3D->mlx.win, 17, 0, free_all_and_exit, cub3D);
-	mlx_loop_hook(cub3D->mlx.ptr, render_loop, cub3D);
-	// mlx_mouse_hook(cub3D->win, mouse_func, cub3D);
+	mlx_hook(cub3d->mlx.win, 2, 1L << 0, key_press, cub3d);
+	mlx_hook(cub3d->mlx.win, 3, 1L << 1, key_release, cub3d);
+	mlx_hook(cub3d->mlx.win, 17, 0, free_all_and_exit, cub3d);
+	mlx_loop_hook(cub3d->mlx.ptr, render_loop, cub3d);
 }

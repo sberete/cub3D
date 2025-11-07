@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/03 15:36:34 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/07 01:53:27 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@
 # define WIDTH 800
 # define HEIGHT 800
 # define BUFFER_SIZE 42
-#define TILE_SIZE 100
+# define TILE_SIZE 100
 
-#define WHITE     0x00FFFFFF
-#define BLACK     0x00000000
-#define RED       0x00FF0000
-#define GREEN     0x0000FF00
-#define BLUE      0x000000FF
-#define YELLOW    0x00FFFF00
-#define MAGENTA   0x00FF00FF
-#define CYAN      0x0000FFFF
-#define GRAY      0x00808080
-#define DARKGRAY  0x00404040
-#define LIGHTGRAY 0x00C0C0C0
+# define WHITE 0x00FFFFFF
+# define BLACK 0x00000000
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+# define BLUE 0x000000FF
+# define YELLOW 0x00FFFF00
+# define MAGENTA 0x00FF00FF
+# define CYAN 0x0000FFFF
+# define GRAY 0x00808080
+# define DARKGRAY 0x00404040
+# define LIGHTGRAY 0x00C0C0C0
 
-/* Custom project colors */
-#define COLOR_WALL      GRAY
-#define COLOR_FLOOR     WHITE
-#define COLOR_PLAYER    RED
+# define COLOR_WALL GRAY
+# define COLOR_FLOOR WHITE
+# define COLOR_PLAYER RED
+
 typedef struct s_img
 {
 	void		*img_ptr;
@@ -106,6 +106,7 @@ typedef struct s_player
 {
 	t_move		move;
 	t_direction	dir;
+	t_direction	plane;
 	t_position	pos;
 }				t_player;
 
@@ -123,17 +124,15 @@ typedef struct s_data
 	t_player	player;
 }				t_data;
 
-int	parsing(t_data *cub3d, int argc, char **argv);
+int				parsing(t_data *cub3d, int argc, char **argv);
 void			mlx_hookes(t_data *cub3D);
 void			free_all(t_data *cub3D);
 int				free_all_and_exit(t_data *cub3D);
-// draw.c
-void	put_pixel(t_img *img, int x, int y, int color);
-void	draw_square(t_img *img, int x, int y, int color);
-void	draw_map_2d(t_data *cub3d);
-void	draw_player_2d(t_data *cub3d);
-void	draw_scene(t_data *cub3d);
-
+void			put_pixel(t_img *img, int x, int y, int color);
+void			draw_square(t_img *img, int x, int y, int color);
+void			draw_map_2d(t_data *cub3d);
+void			draw_player_2d(t_data *cub3d);
+void			draw_scene(t_data *cub3d);
 void			param_available(void);
 void			mlx_failure(t_data *cub3D, char *str);
 void			cub3d_init(t_data *cub3d);

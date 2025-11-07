@@ -87,8 +87,7 @@ void	draw_player_dir_2d(t_data *cub3d)
 	i = 0;
 	while (i < len)
 	{
-		put_pixel(&cub3d->img, px + (int)(dx * i), py + (int)(dy * i),
-			GREEN);
+		put_pixel(&cub3d->img, px + (int)(dx * i), py + (int)(dy * i), GREEN);
 		i++;
 	}
 }
