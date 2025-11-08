@@ -6,12 +6,57 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/07 01:53:54 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/08 13:23:33 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+/*
+Du coup la je t'ai mis ce que j'aurais besoin que tu me remplisse
+Ca sera tout les structures en bas dans le commentaire
 
+typedef struct s_texture
+{
+	char		*north;
+	char		*south;
+	char		*west;
+	char		*east;
+}				t_texture;
+
+typedef struct s_color
+{
+	char		*floor;
+	char		*ceiling;
+}				t_color;
+
+typedef struct s_map
+{
+	char		*name;
+	t_texture	texture;
+	t_color		color;
+	char		**grid;
+	int			width;
+	int			height;
+}				t_map;
+
+typedef struct s_direction
+{
+	double		x;
+	double		y;
+}				t_direction;
+
+typedef struct s_position
+{
+	double		x;
+	double		y;
+}				t_position;
+
+typedef struct s_player
+{
+	t_direction	dir;
+	t_position	pos;
+}				t_player;
+*/
 static char	**fill_test_map(void)
 {
 	static char	*template[] = {"111111111111111111111", "101000001000000000001",
