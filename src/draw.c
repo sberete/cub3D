@@ -10,125 +10,130 @@ void	put_pixel(t_img *img, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
-void	draw_square(t_img *img, int x, int y, int color)
+static void	init_ray(t_data *cub3d, int x, t_ray *ray)
 {
-	int	i;
-	int	j;
+	double	camera_x;
 
-	i = 0;
-	while (i < TILE_SIZE)
+	camera_x = 2.0 * x / (double)WIDTH - 1.0;
+	ray->ray_dir_x = cub3d->player.dir.x + cub3d->player.plane.x * camera_x;
+	ray->ray_dir_y = cub3d->player.dir.y + cub3d->player.plane.y * camera_x;
+	ray->map_x = (int)cub3d->player.pos.x;
+	ray->map_y = (int)cub3d->player.pos.y;
+	if (ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
+	else
+		ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+	if (ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
+	else
+		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+}
+
+static void	init_step(t_data *cub3d, t_ray *ray)
+{
+	if (ray->ray_dir_x < 0)
 	{
-		j = 0;
-		while (j < TILE_SIZE)
-		{
-			put_pixel(img, x + j, y + i, color);
-			j++;
-		}
-		i++;
+		ray->step_x = -1;
+		ray->side_dist_x = (cub3d->player.pos.x - ray->map_x)
+			* ray->delta_dist_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - cub3d->player.pos.x)
+			* ray->delta_dist_x;
+	}
+	if (ray->ray_dir_y < 0)
+	{
+		ray->step_y = -1;
+		ray->side_dist_y = (cub3d->player.pos.y - ray->map_y)
+			* ray->delta_dist_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - cub3d->player.pos.y)
+			* ray->delta_dist_y;
 	}
 }
 
-void	draw_map_2d(t_data *cub3d)
+static void	perform_dda(t_data *cub3d, t_ray *ray)
 {
-	char	**map;
-	int		tile_size_x;
-	int		tile_size_y;
-	int		tile_size;
+	int	hit;
+
+	hit = 0;
+	while (hit == 0)
+	{
+		if (ray->side_dist_x < ray->side_dist_y)
+		{
+			ray->side_dist_x += ray->delta_dist_x;
+			ray->map_x += ray->step_x;
+			ray->side = 0;
+		}
+		else
+		{
+			ray->side_dist_y += ray->delta_dist_y;
+			ray->map_y += ray->step_y;
+			ray->side = 1;
+		}
+		if (cub3d->map.grid[ray->map_y][ray->map_x] == '1')
+			hit = 1;
+	}
+}
+static void	draw_column(t_data *cub3d, t_ray *ray, int x)
+{
+	double	perp_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
 	int		color;
-	int		y;
-	int		x;
 
-	map = cub3d->map.grid;
-	tile_size_x = WIDTH / cub3d->map.width;
-	tile_size_y = HEIGHT / cub3d->map.height;
-	if (tile_size_x < tile_size_y)
-		tile_size = tile_size_x;
+	if (ray->side == 0)
+		perp_dist = (ray->map_x - cub3d->player.pos.x + (1 - ray->step_x) / 2)
+			/ ray->ray_dir_x;
 	else
-		tile_size = tile_size_y;
-	y = 0;
-	while (map[y])
+		perp_dist = (ray->map_y - cub3d->player.pos.y + (1 - ray->step_y) / 2)
+			/ ray->ray_dir_y;
+	if (perp_dist < 0.0001)
+		perp_dist = 0.0001;
+	line_height = (int)(HEIGHT / perp_dist);
+	draw_start = -line_height / 2 + HEIGHT / 2;
+	draw_end = line_height / 2 + HEIGHT / 2;
+	if (draw_start < 0)
+		draw_start = 0;
+	if (draw_end >= HEIGHT)
+		draw_end = HEIGHT - 1;
+	if (ray->side == 1)
+		color = 0x00707070;
+	else
+		color = 0x00AAAAAA;
+	while (draw_start <= draw_end)
 	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (map[y][x] == '1')
-				color = COLOR_WALL;
-			else
-				color = COLOR_FLOOR;
-			draw_square(&cub3d->img, x * tile_size, y * tile_size, color);
-			x++;
-		}
-		y++;
+		put_pixel(&cub3d->img, x, draw_start, color);
+		draw_start++;
 	}
 }
 
-void	draw_player_dir_2d(t_data *cub3d)
+void	draw_scene_3d(t_data *cub3d)
 {
-	int		tile_x;
-	int		tile_y;
-	int		px;
-	int		py;
-	int		len;
-	double	dx;
-	double	dy;
-	int		i;
+	int	x;
 
-	tile_x = WIDTH / cub3d->map.width;
-	tile_y = HEIGHT / cub3d->map.height;
-	if (tile_x < tile_y)
-		len = tile_x;
-	else
-		len = tile_y;
-	len = (int)(len * 0.8);
-	px = (int)(cub3d->player.pos.x * tile_x);
-	py = (int)(cub3d->player.pos.y * tile_y);
-	dx = cub3d->player.dir.x;
-	dy = cub3d->player.dir.y;
-	i = 0;
-	while (i < len)
+	x = 0;
+	while (x < WIDTH)
 	{
-		put_pixel(&cub3d->img, px + (int)(dx * i), py + (int)(dy * i), GREEN);
-		i++;
-	}
-}
-
-void	draw_player_2d(t_data *cub3d)
-{
-	int	tile_size_x;
-	int	tile_size_y;
-	int	tile_size;
-	int	px;
-	int	py;
-	int	dx;
-	int	dy;
-
-	tile_size_x = WIDTH / cub3d->map.width;
-	tile_size_y = HEIGHT / cub3d->map.height;
-	if (tile_size_x < tile_size_y)
-		tile_size = tile_size_x;
-	else
-		tile_size = tile_size_y;
-	px = (int)(cub3d->player.pos.x * tile_size);
-	py = (int)(cub3d->player.pos.y * tile_size);
-	dy = -2;
-	while (dy <= 2)
-	{
-		dx = -2;
-		while (dx <= 2)
-		{
-			put_pixel(&cub3d->img, px + dx, py + dy, RED);
-			dx++;
-		}
-		dy++;
+		init_ray(cub3d, x, &cub3d->ray);
+		init_step(cub3d, &cub3d->ray);
+		perform_dda(cub3d, &cub3d->ray);
+		draw_column(cub3d, &cub3d->ray, x);
+		x++;
 	}
 }
 
 void	draw_scene(t_data *cub3d)
 {
 	memset(cub3d->img.pixels_ptr, 0, cub3d->img.line_len * HEIGHT);
-	draw_map_2d(cub3d);
-	draw_player_2d(cub3d);
-	draw_player_dir_2d(cub3d);
+	draw_scene_3d(cub3d);
+	draw_minimap(cub3d);
 	mlx_put_image_to_window(cub3d->mlx.ptr, cub3d->mlx.win, cub3d->img.img_ptr,
 		0, 0);
 }

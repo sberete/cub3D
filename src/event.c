@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/07 01:52:36 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/10 17:19:58 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,17 @@ static void	move_player(t_data *cub3d, double dir_x, double dir_y, double speed)
 static void	rotate_player(t_data *cub3d, double angle)
 {
 	double	old_dir_x;
+	double	old_plane_x;
 
 	old_dir_x = cub3d->player.dir.x;
+	old_plane_x = cub3d->player.plane.x;
 	cub3d->player.dir.x = cub3d->player.dir.x * cos(angle) - cub3d->player.dir.y
 		* sin(angle);
 	cub3d->player.dir.y = old_dir_x * sin(angle) + cub3d->player.dir.y
+		* cos(angle);
+	cub3d->player.plane.x = cub3d->player.plane.x * cos(angle)
+		- cub3d->player.plane.y * sin(angle);
+	cub3d->player.plane.y = old_plane_x * sin(angle) + cub3d->player.plane.y
 		* cos(angle);
 }
 
@@ -92,8 +98,8 @@ void	update_player_position(t_data *cub3d)
 	double	move_speed;
 	double	rot_speed;
 
-	move_speed = 0.08;
-	rot_speed = 0.05;
+	move_speed = 0.04;
+	rot_speed = 0.03;
 	if (cub3d->player.move.rotate_left)
 		rotate_player(cub3d, -rot_speed);
 	if (cub3d->player.move.rotate_right)

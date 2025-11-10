@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/07 01:53:27 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/10 16:50:55 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <sys/types.h>
 # include <unistd.h>
 
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 1280
+# define HEIGHT 720
 # define BUFFER_SIZE 42
 # define TILE_SIZE 100
 
@@ -92,6 +92,12 @@ typedef struct s_position
 	double		y;
 }				t_position;
 
+typedef struct s_plane
+{
+	double		x;
+	double		y;
+}				t_plane;
+
 typedef struct s_move
 {
 	int			forward;
@@ -106,7 +112,7 @@ typedef struct s_player
 {
 	t_move		move;
 	t_direction	dir;
-	t_direction	plane;
+	t_plane		plane;
 	t_position	pos;
 }				t_player;
 
@@ -116,12 +122,28 @@ typedef struct s_mlx
 	void		*win;
 }				t_mlx;
 
+typedef struct s_ray
+{
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	int			map_x;
+	int			map_y;
+	int			step_x;
+	int			step_y;
+	int			side;
+}				t_ray;
+
 typedef struct s_data
 {
 	t_mlx		mlx;
 	t_map		map;
 	t_img		img;
 	t_player	player;
+	t_ray		ray;
 }				t_data;
 
 int				parsing(t_data *cub3d, int argc, char **argv);
@@ -138,5 +160,7 @@ void			mlx_failure(t_data *cub3D, char *str);
 void			cub3d_init(t_data *cub3d);
 char			*get_next_line(int fd);
 void			test(t_map *map, char *argv);
+void			draw_scene_3d(t_data *cub3d);
+void	draw_minimap(t_data *cub3d);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/08 13:23:33 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:13:55 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,39 @@ static char	**fill_test_map(void)
 	return (ft_tabdup(template));
 }
 
+static void	init_player_plane(t_player *player)
+{
+	double fov_factor;
+
+	fov_factor = 0.66;
+	if (player->dir.x == 0 && player->dir.y == -1)
+	{
+		player->plane.x = fov_factor;
+		player->plane.y = 0.0;
+	}
+	else if (player->dir.x == 0 && player->dir.y == 1)
+	{
+		player->plane.x = -fov_factor;
+		player->plane.y = 0.0;
+	}
+	else if (player->dir.x == 1 && player->dir.y == 0)
+	{
+		player->plane.x = 0.0;
+		player->plane.y = fov_factor;
+	}
+	else if (player->dir.x == -1 && player->dir.y == 0)
+	{
+		player->plane.x = 0.0;
+		player->plane.y = -fov_factor;
+	}
+}
+
 int	parsing(t_data *cub3d, int argc, char **argv)
 {
-	int found;
-	char *line;
-	size_t len;
-	char c;
+	int		found;
+	char	*line;
+	size_t	len;
+	char	c;
 
 	if (argc != 2)
 		return (1);
@@ -131,6 +158,7 @@ int	parsing(t_data *cub3d, int argc, char **argv)
 					cub3d->player.dir.x = -1.0;
 					cub3d->player.dir.y = 0.0;
 				}
+				init_player_plane(&cub3d->player);
 				found = 1;
 			}
 		}
