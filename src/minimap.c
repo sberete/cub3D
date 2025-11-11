@@ -1,9 +1,5 @@
 #include "cub3D.h"
 
-#define MINIMAP_SCALE 0.2
-#define MINIMAP_OFFSET_X 10
-#define MINIMAP_OFFSET_Y 10
-
 void	draw_tile_minimap(t_data *cub3d, int x, int y, int size, int color)
 {
 	int	i;

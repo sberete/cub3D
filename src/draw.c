@@ -80,6 +80,7 @@ static void	perform_dda(t_data *cub3d, t_ray *ray)
 			hit = 1;
 	}
 }
+
 static void	draw_column(t_data *cub3d, t_ray *ray, int x)
 {
 	double	perp_dist;

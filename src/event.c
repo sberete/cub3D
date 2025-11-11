@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/10 17:19:58 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:38:58 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,23 @@ void	update_player_position(t_data *cub3d)
 			move_speed);
 }
 
+int	mouse_move(int x, int y, t_data *cub3d)
+{
+	static int	last_x = -1;
+	int			delta_x;
+	double		rot_speed;
+
+	(void)y;
+	rot_speed = 0.002;
+	if (last_x == -1)
+		last_x = x;
+	delta_x = x - last_x;
+	last_x = x;
+	if (delta_x != 0)
+		rotate_player(cub3d, delta_x * rot_speed);
+	return (0);
+}
+
 int	render_loop(t_data *cub3d)
 {
 	update_player_position(cub3d);
@@ -130,5 +147,7 @@ void	mlx_hookes(t_data *cub3d)
 	mlx_hook(cub3d->mlx.win, 2, 1L << 0, key_press, cub3d);
 	mlx_hook(cub3d->mlx.win, 3, 1L << 1, key_release, cub3d);
 	mlx_hook(cub3d->mlx.win, 17, 0, free_all_and_exit, cub3d);
+	mlx_hook(cub3d->mlx.win, MotionNotify, PointerMotionMask, mouse_move,
+		cub3d);
 	mlx_loop_hook(cub3d->mlx.ptr, render_loop, cub3d);
 }

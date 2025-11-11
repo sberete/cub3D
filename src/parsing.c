@@ -6,11 +6,12 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/10 15:13:55 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:41:07 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
 /*
 Du coup la je t'ai mis ce que j'aurais besoin que tu me remplisse
 Ca sera tout les structures en bas dans le commentaire
@@ -76,7 +77,7 @@ static char	**fill_test_map(void)
 
 static void	init_player_plane(t_player *player)
 {
-	double fov_factor;
+	double	fov_factor;
 
 	fov_factor = 0.66;
 	if (player->dir.x == 0 && player->dir.y == -1)
@@ -103,10 +104,10 @@ static void	init_player_plane(t_player *player)
 
 int	parsing(t_data *cub3d, int argc, char **argv)
 {
-	int		found;
-	char	*line;
-	size_t	len;
-	char	c;
+	int found;
+	char *line;
+	size_t len;
+	char c;
 
 	if (argc != 2)
 		return (1);

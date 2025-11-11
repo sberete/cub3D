@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/10 16:50:55 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:41:34 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define BUFFER_SIZE 42
-# define TILE_SIZE 100
+# define MINIMAP_SCALE 0.2
+# define MINIMAP_OFFSET_X 10
+# define MINIMAP_OFFSET_Y 10
 
 # define WHITE 0x00FFFFFF
 # define BLACK 0x00000000
@@ -161,6 +163,6 @@ void			cub3d_init(t_data *cub3d);
 char			*get_next_line(int fd);
 void			test(t_map *map, char *argv);
 void			draw_scene_3d(t_data *cub3d);
-void	draw_minimap(t_data *cub3d);
+void			draw_minimap(t_data *cub3d);
 
 #endif
