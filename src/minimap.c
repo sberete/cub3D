@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-void	draw_tile_minimap(t_data *cub3d, int x, int y, int size, int color)
+void	draw_tile_minimap(t_data *cub3d, t_point pos, int size, int color)
 {
 	int	i;
 	int	j;
@@ -11,8 +11,8 @@ void	draw_tile_minimap(t_data *cub3d, int x, int y, int size, int color)
 		j = 0;
 		while (j < size)
 		{
-			put_pixel(&cub3d->img, MINIMAP_OFFSET_X + x + j, MINIMAP_OFFSET_Y
-				+ y + i, color);
+			put_pixel(&cub3d->img, MINIMAP_OFFSET_X + pos.x + j,
+				MINIMAP_OFFSET_Y + pos.y + i, color);
 			j++;
 		}
 		i++;
@@ -21,16 +21,15 @@ void	draw_tile_minimap(t_data *cub3d, int x, int y, int size, int color)
 
 void	draw_player_minimap(t_data *cub3d)
 {
-	int	size;
-	int	px;
-	int	py;
-	int	player_size;
+	int		size;
+	int		player_size;
+	t_point	pos;
 
 	size = (int)((WIDTH * MINIMAP_SCALE) / cub3d->map.width);
 	player_size = size / 2;
-	px = (int)(cub3d->player.pos.x * size) - player_size / 2;
-	py = (int)(cub3d->player.pos.y * size) - player_size / 2;
-	draw_tile_minimap(cub3d, px, py, player_size, RED);
+	pos.x = (int)(cub3d->player.pos.x * size) - player_size / 2;
+	pos.y = (int)(cub3d->player.pos.y * size) - player_size / 2;
+	draw_tile_minimap(cub3d, pos, player_size, RED);
 }
 
 void	draw_minimap(t_data *cub3d)
@@ -39,6 +38,7 @@ void	draw_minimap(t_data *cub3d)
 	int		size;
 	int		y;
 	int		x;
+	t_point	pos;
 
 	map = cub3d->map.grid;
 	size = (int)((WIDTH * MINIMAP_SCALE) / cub3d->map.width);
@@ -48,10 +48,12 @@ void	draw_minimap(t_data *cub3d)
 		x = 0;
 		while (map[y][x])
 		{
+			pos.x = x * size;
+			pos.y = y * size;
 			if (map[y][x] == '1')
-				draw_tile_minimap(cub3d, x * size, y * size, size, COLOR_WALL);
+				draw_tile_minimap(cub3d, pos, size, COLOR_WALL);
 			else
-				draw_tile_minimap(cub3d, x * size, y * size, size, COLOR_FLOOR);
+				draw_tile_minimap(cub3d, pos, size, COLOR_FLOOR);
 			x++;
 		}
 		y++;

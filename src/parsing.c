@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/11 13:41:07 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/15 01:57:44 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,28 +102,59 @@ static void	init_player_plane(t_player *player)
 	}
 }
 
+int	load_texture(void *mlx_ptr, char *path, t_img *tex)
+{
+	tex->img_ptr = mlx_xpm_file_to_image(mlx_ptr, path, &tex->width,
+			&tex->height);
+	if (!tex->img_ptr)
+		return (1);
+	tex->pixels_ptr = mlx_get_data_addr(tex->img_ptr, &tex->bpp, &tex->line_len,
+			&tex->endian);
+	if (!tex->pixels_ptr)
+		return (1);
+	return (0);
+}
+
+int	load_all_textures(t_data *cub3d)
+{
+	if (load_texture(cub3d->mlx.ptr, "./textures/north.xpm",
+			&cub3d->map.texture.north))
+		return (1);
+	if (load_texture(cub3d->mlx.ptr, "./textures/south.xpm",
+			&cub3d->map.texture.south))
+		return (1);
+	if (load_texture(cub3d->mlx.ptr, "./textures/west.xpm",
+			&cub3d->map.texture.west))
+		return (1);
+	if (load_texture(cub3d->mlx.ptr, "./textures/east.xpm",
+			&cub3d->map.texture.east))
+		return (1);
+	return (0);
+}
+
 int	parsing(t_data *cub3d, int argc, char **argv)
 {
-	int found;
-	char *line;
-	size_t len;
-	char c;
+	int		found;
+	char	*line;
+	size_t	len;
+	char	c;
 
 	if (argc != 2)
 		return (1);
 	cub3d->map.name = argv[1];
 	cub3d->map.grid = fill_test_map();
-	cub3d->map.texture.north = "textures/simonkraft/wet_sponge.xpm";
-	cub3d->map.texture.south = "textures/simonkraft/wet_sponge.xpm";
-	cub3d->map.texture.west = "textures/simonkraft/wet_sponge.xpm";
-	cub3d->map.texture.east = "textures/simonkraft/wet_sponge.xpm";
-	cub3d->map.color.floor = "164,169,20";
-	cub3d->map.color.ceiling = "153,204,255";
 	if (!cub3d->map.grid)
 		return (1);
-	found = 0;
+	cub3d->map.color.floor = "164,169,20";
+	cub3d->map.color.ceiling = "153,204,255";
+	// if (load_all_textures(cub3d))
+	// {
+	// 	ft_putstr_fd("Erreur : impossible de charger les textures.\n", 2);
+	// 	return (1);
+	// }
 	cub3d->map.width = 0;
 	cub3d->map.height = 0;
+	found = 0;
 	for (int y = 0; cub3d->map.grid[y]; y++)
 	{
 		line = cub3d->map.grid[y];
@@ -144,17 +175,17 @@ int	parsing(t_data *cub3d, int argc, char **argv)
 					cub3d->player.dir.x = 0.0;
 					cub3d->player.dir.y = -1.0;
 				}
-				if (c == 'S')
+				else if (c == 'S')
 				{
 					cub3d->player.dir.x = 0.0;
 					cub3d->player.dir.y = 1.0;
 				}
-				if (c == 'E')
+				else if (c == 'E')
 				{
 					cub3d->player.dir.x = 1.0;
 					cub3d->player.dir.y = 0.0;
 				}
-				if (c == 'W')
+				else if (c == 'W')
 				{
 					cub3d->player.dir.x = -1.0;
 					cub3d->player.dir.y = 0.0;

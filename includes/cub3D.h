@@ -6,7 +6,7 @@
 /*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/11 13:41:34 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/14 16:38:19 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@
 # define COLOR_FLOOR WHITE
 # define COLOR_PLAYER RED
 
+typedef struct s_point
+{
+	int			x;
+	int			y;
+}				t_point;
+
 typedef struct s_img
 {
 	void		*img_ptr;
@@ -56,14 +62,16 @@ typedef struct s_img
 	int			bpp;
 	int			endian;
 	int			line_len;
+	int			width;
+	int			height;
 }				t_img;
 
 typedef struct s_texture
 {
-	char		*north;
-	char		*south;
-	char		*west;
-	char		*east;
+	t_img		north;
+	t_img		south;
+	t_img		west;
+	t_img		east;
 }				t_texture;
 
 typedef struct s_color
