@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/11 13:38:58 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/18 14:08:10 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	update_player_position(t_data *cub3d)
 	double	move_speed;
 	double	rot_speed;
 
-	move_speed = 0.04;
+	move_speed = 0.02;
 	rot_speed = 0.03;
 	if (cub3d->player.move.rotate_left)
 		rotate_player(cub3d, -rot_speed);
