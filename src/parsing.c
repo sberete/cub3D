@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/18 14:00:01 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/19 18:42:18 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static char	**fill_test_map(void)
 	return (ft_tabdup(template));
 }
 
+
 static void	init_player_plane(t_player *player)
 {
 	double	fov_factor;
@@ -102,31 +103,30 @@ static void	init_player_plane(t_player *player)
 	}
 }
 
-int	load_texture(void *mlx_ptr, char *path, t_img *tex)
+int load_texture(void *mlx_ptr, char *path, t_img *tex)
 {
-	tex->img_ptr = mlx_xpm_file_to_image(mlx_ptr, path, &tex->width,
-			&tex->height);
-	if (!tex->img_ptr)
-		return (1);
-	tex->pixels_ptr = mlx_get_data_addr(tex->img_ptr, &tex->bpp, &tex->line_len,
-			&tex->endian);
-	if (!tex->pixels_ptr)
-		return (1);
-	return (0);
+    tex->img_ptr = mlx_xpm_file_to_image(mlx_ptr, path, &tex->width, &tex->height);
+    if (!tex->img_ptr)
+        return (1);
+    tex->pixels_ptr = mlx_get_data_addr(tex->img_ptr, &tex->bpp, &tex->line_len, &tex->endian);
+    if (!tex->pixels_ptr)
+        return (1);
+    return (0);
 }
+
 
 int	load_all_textures(t_data *cub3d)
 {
-	if (load_texture(cub3d->mlx.ptr, "./textures/north.xpm",
+	if (load_texture(cub3d->mlx.ptr, "./textures/metal_rust.xpm",
 			&cub3d->map.texture.north))
 		return (1);
-	if (load_texture(cub3d->mlx.ptr, "./textures/south.xpm",
+	if (load_texture(cub3d->mlx.ptr, "./textures/metal_rust.xpm",
 			&cub3d->map.texture.south))
 		return (1);
-	if (load_texture(cub3d->mlx.ptr, "./textures/west.xpm",
+	if (load_texture(cub3d->mlx.ptr, "./textures/metal_rust.xpm",
 			&cub3d->map.texture.west))
 		return (1);
-	if (load_texture(cub3d->mlx.ptr, "./textures/east.xpm",
+	if (load_texture(cub3d->mlx.ptr, "./textures/metal_rust.xpm",
 			&cub3d->map.texture.east))
 		return (1);
 	return (0);

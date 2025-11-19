@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 19:23:15 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/07 01:54:46 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/19 18:41:27 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ void	free_all(t_data *cub3D)
 		mlx_destroy_window(cub3D->mlx.ptr, cub3D->mlx.win);
 	if (cub3D->img.img_ptr)
 		mlx_destroy_image(cub3D->mlx.ptr, cub3D->img.img_ptr);
+	if (cub3D->map.texture.north.img_ptr)
+		mlx_destroy_image(cub3D->mlx.ptr, cub3D->map.texture.north.img_ptr);
+	if (cub3D->map.texture.south.img_ptr)
+		mlx_destroy_image(cub3D->mlx.ptr, cub3D->map.texture.south.img_ptr);
+	if (cub3D->map.texture.west.img_ptr)
+		mlx_destroy_image(cub3D->mlx.ptr, cub3D->map.texture.west.img_ptr);
+	if (cub3D->map.texture.east.img_ptr)
+		mlx_destroy_image(cub3D->mlx.ptr, cub3D->map.texture.east.img_ptr);
 	if (cub3D->mlx.ptr)
 	{
 		mlx_destroy_display(cub3D->mlx.ptr);

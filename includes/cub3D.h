@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/14 16:38:19 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/19 18:32:59 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,14 @@ typedef struct s_texture
 	t_img		west;
 	t_img		east;
 }				t_texture;
+
+typedef struct s_path
+{
+	char		*north;
+	char		*south;
+	char		*west;
+	char		*east;
+}				t_path;
 
 typedef struct s_color
 {
@@ -172,5 +180,6 @@ char			*get_next_line(int fd);
 void			test(t_map *map, char *argv);
 void			draw_scene_3d(t_data *cub3d);
 void			draw_minimap(t_data *cub3d);
+int				load_all_textures(t_data *cub3d);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 15:39:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/19 14:17:12 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/19 18:43:02 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	cub3d_init(t_data *cub3d)
 	cub3d->mlx.ptr = mlx_init();
 	if (!cub3d->mlx.ptr)
 		mlx_failure(cub3d, "MLX init failed");
+	if (load_all_textures(cub3d))
+		mlx_failure(cub3d, "Texture creation failed");
 	cub3d->mlx.win = mlx_new_window(cub3d->mlx.ptr, WIDTH, HEIGHT,
 			cub3d->map.name);
 	if (!cub3d->mlx.win)
