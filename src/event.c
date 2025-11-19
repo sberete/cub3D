@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/18 14:08:10 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/19 14:13:15 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,18 +120,18 @@ void	update_player_position(t_data *cub3d)
 
 int	mouse_move(int x, int y, t_data *cub3d)
 {
-	static int	last_x = -1;
 	int			delta_x;
 	double		rot_speed;
-
+	int center_x = WIDTH / 2;
+	int center_y = HEIGHT / 2;
 	(void)y;
 	rot_speed = 0.002;
-	if (last_x == -1)
-		last_x = x;
-	delta_x = x - last_x;
-	last_x = x;
+	if (x == center_x)
+		return (0);
+	delta_x = x - center_x;
 	if (delta_x != 0)
 		rotate_player(cub3d, delta_x * rot_speed);
+	mlx_mouse_move(cub3d->mlx.ptr, cub3d->mlx.win, center_x, center_y);
 	return (0);
 }
 
