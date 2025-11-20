@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/19 14:13:15 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/20 15:19:23 by sxriimu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	key_press(int keycode, t_data *cub3d)
 		cub3d->player.move.rotate_left = 1;
 	if (keycode == XK_Right)
 		cub3d->player.move.rotate_right = 1;
+	if (keycode == XK_e) // <<--- ajouté
+		interact(cub3d);
 	return (0);
 }
 
@@ -50,16 +52,25 @@ int	key_release(int keycode, t_data *cub3d)
 
 int	is_wall(t_data *cub3d, double x, double y)
 {
-	int	map_x;
-	int	map_y;
+	int		map_x;
+	int		map_y;
+	char	cell;
+	t_door	*door;
 
 	map_x = (int)x;
 	map_y = (int)y;
 	if (map_y < 0 || map_y >= cub3d->map.height || map_x < 0
 		|| map_x >= cub3d->map.width)
 		return (1);
-	if (cub3d->map.grid[map_y][map_x] == '1')
-		return (1);
+	cell = cub3d->map.grid[map_y][map_x];
+	if (cell == '1')
+		return (1); // mur classique
+	if (cell == '2')
+	{
+		door = find_door(&cub3d->map, map_x, map_y);
+		if (door && door->openness < 0.95) // un peu de marge
+			return (1);
+	}
 	return (0);
 }
 
@@ -120,10 +131,13 @@ void	update_player_position(t_data *cub3d)
 
 int	mouse_move(int x, int y, t_data *cub3d)
 {
-	int			delta_x;
-	double		rot_speed;
-	int center_x = WIDTH / 2;
-	int center_y = HEIGHT / 2;
+	int		delta_x;
+	double	rot_speed;
+	int		center_x;
+	int		center_y;
+
+	center_x = WIDTH / 2;
+	center_y = HEIGHT / 2;
 	(void)y;
 	rot_speed = 0.002;
 	if (x == center_x)
