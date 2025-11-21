@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 13:52:34 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/20 15:19:03 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/21 16:30:01 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,90 +69,96 @@ static void	init_step(t_data *cub3d, t_ray *ray)
 	}
 }
 
-t_door *find_door(t_map *map, int x, int y)
+t_door	*find_door(t_map *map, int x, int y)
 {
-    int i = 0;
-    while (i < map->door_count)
-    {
-        if (map->doors[i].x == x && map->doors[i].y == y)
-            return (&map->doors[i]);
-        i++;
-    }
-    return (NULL);
+	int	i;
+
+	i = 0;
+	while (i < map->door_count)
+	{
+		if (map->doors[i].x == x && map->doors[i].y == y)
+			return (&map->doors[i]);
+		i++;
+	}
+	return (NULL);
 }
 
-void update_doors(t_map *map)
+void	update_doors(t_map *map)
 {
-    int i = 0;
+	int	i;
 
-    while (i < map->door_count)
-    {
-        if (map->doors[i].opening != 0)
-        {
-            map->doors[i].openness += map->doors[i].opening * 0.05;
-            if (map->doors[i].openness >= 1.0)
-            {
-                map->doors[i].openness = 1.0;
-                map->doors[i].opening = 0;
-            }
-            if (map->doors[i].openness <= 0.0)
-            {
-                map->doors[i].openness = 0.0;
-                map->doors[i].opening = 0;
-            }
-        }
-        i++;
-    }
+	i = 0;
+	while (i < map->door_count)
+	{
+		if (map->doors[i].opening != 0)
+		{
+			map->doors[i].openness += map->doors[i].opening * 0.05;
+			if (map->doors[i].openness >= 1.0)
+			{
+				map->doors[i].openness = 1.0;
+				map->doors[i].opening = 0;
+			}
+			if (map->doors[i].openness <= 0.0)
+			{
+				map->doors[i].openness = 0.0;
+				map->doors[i].opening = 0;
+			}
+		}
+		i++;
+	}
 }
 
-void interact(t_data *cub3d)
+void	interact(t_data *cub3d)
 {
-    int x = (int)(cub3d->player.pos.x + cub3d->player.dir.x);
-    int y = (int)(cub3d->player.pos.y + cub3d->player.dir.y);
-    t_door *door = find_door(&cub3d->map, x, y);
+	int		x;
+	int		y;
+	t_door	*door;
 
-    if (door)
-    {
-        if (door->openness < 1.0)
-            door->opening = 1; // ouvrir
-        else
-            door->opening = -1; // fermer
-    }
+	x = (int)(cub3d->player.pos.x + cub3d->player.dir.x);
+	y = (int)(cub3d->player.pos.y + cub3d->player.dir.y);
+	door = find_door(&cub3d->map, x, y);
+	if (door)
+	{
+		if (door->openness < 1.0)
+			door->opening = 1;
+		else
+			door->opening = -1;
+	}
 }
 
-static void perform_dda(t_data *cub3d, t_ray *ray)
+static void	perform_dda(t_data *cub3d, t_ray *ray)
 {
-    int hit = 0;
-    t_door *door;
+	int		hit;
+	t_door	*door;
+	char	cell;
 
-    while (hit == 0)
-    {
-        if (ray->side_dist_x < ray->side_dist_y)
-        {
-            ray->side_dist_x += ray->delta_dist_x;
-            ray->map_x += ray->step_x;
-            ray->side = 0;
-        }
-        else
-        {
-            ray->side_dist_y += ray->delta_dist_y;
-            ray->map_y += ray->step_y;
-            ray->side = 1;
-        }
-
-        char cell = cub3d->map.grid[ray->map_y][ray->map_x];
-        if (cell == '1')
-            hit = 1;
-        else if (cell == '2')
-        {
-            door = find_door(&cub3d->map, ray->map_x, ray->map_y);
-            if (door && door->openness >= 1.0)
-                continue; // ignore fully open door
-            hit = 1;
-        }
-    }
+	hit = 0;
+	while (hit == 0)
+	{
+		if (ray->side_dist_x < ray->side_dist_y)
+		{
+			ray->side_dist_x += ray->delta_dist_x;
+			ray->map_x += ray->step_x;
+			ray->side = 0;
+		}
+		else
+		{
+			ray->side_dist_y += ray->delta_dist_y;
+			ray->map_y += ray->step_y;
+			ray->side = 1;
+		}
+		cell = cub3d->map.grid[ray->map_y][ray->map_x];
+		if (cell == '1')
+			hit = 1;
+		else if (cell == '2')
+		{
+			door = find_door(&cub3d->map, ray->map_x, ray->map_y);
+			if (door && door->openness >= 1.0)
+				continue ;
+			hit = 1;
+		}
+	}
 }
-
 
 static t_img	*get_texture(t_data *cub3d, t_ray *ray)
 {
@@ -262,6 +268,7 @@ void	draw_scene_3d(t_data *cub3d)
 		x++;
 	}
 }
+
 static void	draw_floor_ceiling(t_data *cub3d)
 {
 	int	y;
@@ -283,16 +290,13 @@ static void	draw_floor_ceiling(t_data *cub3d)
 	}
 }
 
-void draw_scene(t_data *cub3d)
+void	draw_scene(t_data *cub3d)
 {
-    memset(cub3d->img.pixels_ptr, 0, cub3d->img.line_len * HEIGHT);
-    draw_floor_ceiling(cub3d);  // sol et plafond
-
-    update_doors(&cub3d->map);  // met à jour les portes animées
-    draw_scene_3d(cub3d);       // raycasting
-
-    draw_minimap(cub3d);
-    mlx_put_image_to_window(cub3d->mlx.ptr, cub3d->mlx.win,
-        cub3d->img.img_ptr, 0, 0);
+	memset(cub3d->img.pixels_ptr, 0, cub3d->img.line_len * HEIGHT);
+	draw_floor_ceiling(cub3d);
+	update_doors(&cub3d->map);
+	draw_scene_3d(cub3d);
+	draw_minimap(cub3d);
+	mlx_put_image_to_window(cub3d->mlx.ptr, cub3d->mlx.win, cub3d->img.img_ptr,
+		0, 0);
 }
-

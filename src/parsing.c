@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 17:26:49 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/20 14:43:47 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/21 18:47:28 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	**fill_test_map(void)
 			"100000101000100010001",
 			"101110101110101110111", 
 			"101000100000100010101",
-			"101011111111111010101", 
+			"101011111111111010101",
 			"100010000000000010001",
 			"1D1010111011111111101", 
 			"1ND000001000000000001",
@@ -183,8 +183,7 @@ int	parsing(t_data *cub3d, int argc, char **argv)
 	cub3d->map.door_count = 0;
 	cub3d->map.doors = malloc(sizeof(t_door) * MAX_DOORS);
 	if (!cub3d->map.doors)
-		return (1); // ou gestion d'erreur
-
+		return (1);
 	for (int y = 0; cub3d->map.grid[y]; y++)
 	{
 		line = cub3d->map.grid[y];
@@ -195,23 +194,22 @@ int	parsing(t_data *cub3d, int argc, char **argv)
 		for (size_t x = 0; x < len && !found; x++)
 		{
 			c = line[x];
-    if (c == 'D')
-    {
-        cub3d->map.doors[cub3d->map.door_count].x = x;
-        cub3d->map.doors[cub3d->map.door_count].y = y;
-        cub3d->map.doors[cub3d->map.door_count].openness = 0.0;
-        cub3d->map.doors[cub3d->map.door_count].opening = 0;
-        cub3d->map.door_count++;
-        cub3d->map.grid[y][x] = '2'; // mur spécial pour DDA
-        continue; // passe au suivant
-    }
+			if (c == 'D')
+			{
+				cub3d->map.doors[cub3d->map.door_count].x = x;
+				cub3d->map.doors[cub3d->map.door_count].y = y;
+				cub3d->map.doors[cub3d->map.door_count].openness = 0.0;
+				cub3d->map.doors[cub3d->map.door_count].opening = 0;
+				cub3d->map.door_count++;
+				cub3d->map.grid[y][x] = '2';
+				continue ;
+			}
 			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
 				cub3d->player.pos.x = (double)x + 0.5;
 				cub3d->player.pos.y = (double)y + 0.5;
 				cub3d->map.grid[y][x] = '0';
 				if (c == 'N')
-
 				{
 					cub3d->player.dir.x = 0.0;
 					cub3d->player.dir.y = -1.0;

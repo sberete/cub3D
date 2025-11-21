@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 19:23:15 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/19 18:41:27 by sberete          ###   ########.fr       */
+/*   Updated: 2025/11/21 18:13:02 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	free_map(t_map *map)
 {
 	if (map->grid)
 		free_tab(map->grid);
+	free(map->doors);
 	/*if (map->color.ceiling)
 		free(map->color.ceiling);
 	if (map->color.floor)

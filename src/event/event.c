@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:53:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/20 15:19:23 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/21 16:30:24 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	key_press(int keycode, t_data *cub3d)
 		cub3d->player.move.rotate_left = 1;
 	if (keycode == XK_Right)
 		cub3d->player.move.rotate_right = 1;
-	if (keycode == XK_e) // <<--- ajouté
+	if (keycode == XK_e)
 		interact(cub3d);
 	return (0);
 }
@@ -64,11 +64,11 @@ int	is_wall(t_data *cub3d, double x, double y)
 		return (1);
 	cell = cub3d->map.grid[map_y][map_x];
 	if (cell == '1')
-		return (1); // mur classique
+		return (1);
 	if (cell == '2')
 	{
 		door = find_door(&cub3d->map, map_x, map_y);
-		if (door && door->openness < 0.95) // un peu de marge
+		if (door && door->openness < 0.95)
 			return (1);
 	}
 	return (0);

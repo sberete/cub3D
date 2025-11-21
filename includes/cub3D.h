@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:52:23 by sberete           #+#    #+#             */
-/*   Updated: 2025/11/20 14:47:24 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/21 16:36:56 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
-# define BUFFER_SIZE 42
 # define MINIMAP_SCALE 0.2
 # define MINIMAP_OFFSET_X 10
 # define MINIMAP_OFFSET_Y 10
@@ -48,7 +47,8 @@
 # define COLOR_WALL GRAY
 # define COLOR_FLOOR WHITE
 # define COLOR_PLAYER RED
-#define MAX_DOORS 64
+# define MAX_DOORS 64
+
 typedef struct s_point
 {
 	int			x;
@@ -89,25 +89,26 @@ typedef struct s_color
 	int			floor_rgb;
 	int			ceiling_rgb;
 }				t_color;
+
 typedef struct s_door
 {
-    int     x;
-    int     y;
-    double  openness;   // 0.0 (fermée) → 1.0 (ouverte)
-    int     opening;    // 1 si on ouvre, -1 si on ferme, 0 si stable
-}               t_door;
+	int			x;
+	int			y;
+	double		openness;
+	int			opening;
+}				t_door;
+
 typedef struct s_map
 {
-    char        *name;
-    t_texture   texture;
-    t_color     color;
-    char        **grid;
-    int         width;
-    int         height;
-    t_door      *doors;
-    int         door_count;
-}               t_map;
-
+	char		*name;
+	t_texture	texture;
+	t_color		color;
+	char		**grid;
+	int			width;
+	int			height;
+	t_door		*doors;
+	int			door_count;
+}				t_map;
 
 typedef struct s_direction
 {
@@ -180,8 +181,6 @@ typedef struct s_ray
 	int			side;
 }				t_ray;
 
-
-
 typedef struct s_data
 {
 	t_mlx		mlx;
@@ -208,7 +207,7 @@ void			test(t_map *map, char *argv);
 void			draw_scene_3d(t_data *cub3d);
 void			draw_minimap(t_data *cub3d);
 int				load_all_textures(t_data *cub3d);
-void interact(t_data *cub3d);
-t_door *find_door(t_map *map, int x, int y);
+void			interact(t_data *cub3d);
+t_door			*find_door(t_map *map, int x, int y);
 
 #endif

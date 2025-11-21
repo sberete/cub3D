@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxriimu <sxriimu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 18:07:38 by sberete           #+#    #+#             */
-/*   Updated: 2025/10/29 21:46:16 by sxriimu          ###   ########.fr       */
+/*   Updated: 2025/11/21 16:37:04 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define BUFFER_SIZE 42
 
 int		ft_atoi(const char *s);
 void	ft_bzero(void *s, size_t n);
@@ -57,5 +60,6 @@ char	*ft_pathjoin(char const *s1, char const *s2);
 size_t	ft_tablen(char **t);
 char	*ft_join_sep(const char *a, const char *b, const char *c);
 char	**ft_tabdup(char **src);
+char	*get_next_line(int fd);
 
 #endif
